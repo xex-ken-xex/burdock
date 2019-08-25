@@ -1,83 +1,118 @@
 <template>
-
-
   <div>
-  <v-card
-    class="mx-auto"
-  >
-<v-toolbar color="teal" dark>
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-card class="mx-auto">
 
-          <v-toolbar-title>弾き語りコンサート2019</v-toolbar-title>
+      <v-toolbar color="teal" dark>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-toolbar-title>{{concert.name}}</v-toolbar-title>
+        <em>{{concert.description}}</em>
+        <div class="flex-grow-1"></div>
+        <v-btn icon><v-icon>more_vert</v-icon></v-btn>
+      </v-toolbar>
 
-          <div class="flex-grow-1"></div>
-
-          <v-btn icon>
-            <v-icon>more_vert</v-icon>
-          </v-btn>
-        </v-toolbar>
-                <v-img src="https://cdn.vuetifyjs.com/images/cards/forest-art.jpg"></v-img>
-        <v-card-text>
-          <h2 class="title primary--text">弾き語りコンサート2019</h2>
+        <h2 class="title primary--text">{{concert.name}}</h2>
+        <div>
+            <p><v-rating :value="4" dense color="orange" background-color="orange" hover class="mr-2"></v-rating></p>
           <v-subheader>
-          2019/04/20 開演：17：30 開場：17：00
+            <p>{{concert.date}} 開演：{{concert.start_at}} 開場：{{concert.open_at}}</p>
           </v-subheader>
-    <v-list>
-      <v-list-item
-        v-for="item in items"
-        :key="item.title"
-      >
-        <v-list-item-content>
-          <v-list-item-title v-text="item.title"></v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-avatar>
-          <v-img :src="item.avatar"></v-img>
-        </v-list-item-avatar>
-      </v-list-item>
-    </v-list>
-
-          <v-rating
-            :value="4"
-            dense
-            color="orange"
-            background-color="orange"
-            hover
-            class="mr-2"
-          ></v-rating>
-          <em>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</em>
-        </v-card-text>
-        <v-card-title>
-          <v-btn><span>松戸市文化会館：『森のホール２１』</span><v-icon>place</v-icon>
-    </v-btn>
-        </v-card-title>
-    <SetList/>
-  </v-card>
+          <v-btn v-if="concert.location">
+            <span>{{concert.location}}</span><v-icon>place</v-icon>
+          </v-btn>
+        </div>
+      <v-card-text>
+        <v-list>
+          <v-list-item v-for="performe in concert.performer " :key="performe.name">
+            <v-list-item-content>
+              <v-list-item-avatar><v-img :src="performe.avatar"></v-img></v-list-item-avatar>
+              <v-list-item-title v-text="performe.name"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <SetList v-model="concert.setlist"/>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
 <script lang="ts">
-
-import {Component, Vue} from 'vue-property-decorator';
-import SetList from '@/components/SetList.vue';
+import { Component, Vue } from "vue-property-decorator";
+import SetList from "@/components/SetList.vue";
+import ConcertJSON from "./ConcertJSON";
 
 @Component({
-components: {
-    SetList,
-},
+  components: {
+    SetList
+  }
 })
-
 export default class Concert extends Vue {
   public rating: number = 3;
-
-  public items: any[] = [
-          { icon: true, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-          { title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-          { title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-          { title: 'Cindy Baker', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        ];
+  public concert: ConcertJSON = {
+    type: "concert",
+    id: "28987",
+    name: "猫森集会 2019 Aプログラム",
+    date: "2019-09-17",
+    open_at: "17:00:00",
+    start_at: "17:30:00",
+    description: "",
+    performer: [],
+    location: "",
+    setlist: {
+      id: 899,
+      items: [
+        {
+          type: "song",
+          item: {
+            type: "song",
+            id: "298",
+            name: "おはようございますの帽子屋さん"
+          },
+          memo: ""
+        },
+        {
+          type: "note",
+          memo: "開演の挨拶"
+        },
+        {
+          type: "song",
+          item: {
+            type: "song",
+            id: "111",
+            name: "電波塔の少年"
+          },
+          memo: "少年の恋の歌 1曲/3曲"
+        },
+        {
+          type: "song",
+          item: {
+            type: "song",
+            id: "212",
+            name: "ボクハ・キミガ・スキ"
+          },
+          memo: "少年の恋の歌 2曲/3曲"
+        },
+        {
+          type: "song",
+          item: {
+            type: "song",
+            id: "124",
+            name: "海の時間"
+          },
+          memo: "少年の恋の歌 3曲/3曲"
+        }
+      ],
+      rates: {
+        value: "3",
+        state: "evaluation"
+      }
+    },
+    rates: {
+      value: "21",
+      state: "credible"
+    }
+  };
 }
 </script>
 
 <style scoped>
-
 </style>
