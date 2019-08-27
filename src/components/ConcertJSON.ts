@@ -40,4 +40,4 @@ export interface ItemItem {
     id: string;
     name: string;
 }
-export default ConcertJSON
+export default ConcertJSON;
