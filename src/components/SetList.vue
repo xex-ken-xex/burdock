@@ -1,38 +1,15 @@
 <template>
   <div>
-    <v-rating small v-model=rating :readonly=rateDisabledStar></v-rating>
-    <v-btn small color='gray' v-if=rateChanged @click=sendData>修正</v-btn>
     <v-container>
-      <v-timeline dense clipped>
-        <v-timeline-item fill-dot class='white--text mb-12' color='orange' large>
-          <template v-slot:icon>
-            <span>開演</span>
-          </template>
-        </v-timeline-item>
-
-        <v-timeline-item
-          class='mb-4'
-          color='primary'
-          icon-color='grey lighten-2'
-          v-for='item in myList'
-          v-bind:key='item.memo'
-        >
-          <v-row>
-            <v-col cols='12'>
-              <p v-if='item.item'>{{item.item.name}}</p>
-              <div class='pa-4 pt-0 caption' v-if='item.memo'>
-                <em>{{item.memo}}</em>
-              </div>
-            </v-col>
-          </v-row>
-        </v-timeline-item>
-
-        <v-timeline-item fill-dot class='white--text mb-12' color='orange' large>
-          <template v-slot:icon>
-            <span>終演</span>
-          </template>
-        </v-timeline-item>
-      </v-timeline>
+      <p>演目</p>
+      <ul>
+        <li v-for="(item, i) in myList" :key="i" v-if='item.item'><v-icon>music_note</v-icon>{{item.item.name}}</li>
+        <li v-else><v-icon>face</v-icon>{{item.memo}}</li>
+      </ul>
+    </v-container>
+    <v-container>
+      <v-rating small v-model=rating :readonly=rateDisabledStar></v-rating>
+      <v-btn small color='gray' v-if=rateChanged @click=sendData>修正</v-btn>
     </v-container>
   </div>
 </template>
@@ -62,4 +39,7 @@ export default class SetList extends Vue {
 }
 </script>
 <style scoped>
+li {
+  list-style-type: none;
+}
 </style>
