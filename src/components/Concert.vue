@@ -8,17 +8,17 @@
         <div class='flex-grow-1'></div>
         <v-btn icon><v-icon>more_vert</v-icon></v-btn>
       </v-toolbar>
-
-        <h2 class='title primary--text'>{{concert.name}}</h2>
         <div>
-          <em>{{concert.description}}</em>
-            <p><v-rating :value='4' dense color='orange' background-color='orange' hover class='mr-2'></v-rating></p>
-          <v-subheader>
-            <p>{{concert.date}} 開演：{{concert.start_at}} 開場：{{concert.open_at}}</p>
-          </v-subheader>
+          <div>
+            <p>開催日：{{concert.date}} 開演：{{concert.start_at}} 開場：{{concert.open_at}}</p>
+            <p>主催：TOKYO FM, TOKIWA CREATIVE PRODUCTS</p>
+            <p>共演：渡辺等、石井AQ</p>
+            <p>金額：S席 5,500 A席 4,500</p>
+          </div>
           <v-btn v-if='concert.location'>
             <span>{{concert.location}}</span><v-icon>place</v-icon>
           </v-btn>
+          <Rating :rating=ra :id=2 />
         </div>
       <v-card-text>
         <v-list>
@@ -39,15 +39,18 @@
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator';
 import SetList from '@/components/SetList.vue';
+import Rating from '@/components/Rating.vue';
+
 import ConcertJSON from '@/components/ConcertJSON';
 
 @Component({
   components: {
     SetList,
+    Rating,
   },
 })
 export default class Concert extends Vue {
-  public rating: number = 3;
+  public ra: number = 3;
   public concert: ConcertJSON = {
     type: 'concert',
     id: '28987',
